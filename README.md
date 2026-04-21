@@ -76,6 +76,33 @@ Outputs land in `outputs/`:
 - `fan_chart.png` — 5/25/50/75/95 fan over 1Y
 - `terminal_hist.png` — 1Y terminal distribution
 
+## 100 Brownian-motion scenarios to 2030
+
+`brent_gbm_2030.py` runs a **pure GBM** (no jumps) with the same `S0`,
+µ = 2%, σ = 45%, producing 100 paths of business-daily prices from
+2026-04-20 to 2030-12-31.
+
+Outputs:
+
+- `outputs/brent_gbm_100_scenarios_2030.csv` — full daily matrix
+  (rows = dates, columns = `scenario_001` … `scenario_100`)
+- `outputs/brent_gbm_100_scenarios_2030.png` — spaghetti plot
+- `outputs/brent_gbm_2030_terminal_stats.csv` — 2030-12-31 distribution
+
+Terminal (2030-12-31) stats from the run:
+
+```
+ mean $93.25   std $102.69
+ p5   $13.14   p50 $62.49   p95 $232.80
+ min  $5.11    max $825.32
+```
+
+Under lognormal dynamics a 4.7-year horizon blows the tails out hard
+(σ·√T ≈ 0.97) — the median drifts below spot while the mean stays near
+spot, which is the signature right-skew of GBM. Treat the p5 / p95 as
+diffusion-only bounds; news-driven regime shifts would tighten the
+realistic band.
+
 ## Caveats
 
 - Single-asset, single-regime model. No regime switching between
